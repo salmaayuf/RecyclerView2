@@ -1,5 +1,8 @@
 package id.sch.smktelkom_mlg.learn.recyclerview1;
 
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,4 +30,20 @@ public class MainActivity extends AppCompatActivity {
         fillData();
     }
 
+    private void fillData() {
+        Resources resources = getResources();
+        String[] arJudul = resources.getStringArray(R.array.places);
+        String[] arDeskripsi = resources.getStringArray(R.array.place_desc);
+        TypedArray a = resources.obtainTypedArray(R.array.places_picture);
+        Drawable[] arFoto = new Drawable[a.length()];
+        for (int i = 0; i < arFoto.length; i++) {
+            arFoto[i] = a.getDrawable(i);
+        }
+        a.recycle();
+
+        for (int i = 0; i < arJudul.length; i++) {
+            mList.add(new Hotel(arJudul[i], arDeskripsi[i], arFoto[i]));
+        }
+        mAdapter.notifyDataSetChanged();
+    }
 }
